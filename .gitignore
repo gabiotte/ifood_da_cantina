@@ -1,0 +1,24 @@
+# Maven
+target/
+*.class
+
+# Spring Boot
+*.log
+
+# H2 local database
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
