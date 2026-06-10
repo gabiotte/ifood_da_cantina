@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFood da Cantina</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main class="page">
+    <section class="header">
+        <p class="eyebrow">Pedido antecipado</p>
+        <h1>Cardapio da cantina</h1>
+        <p class="subtitle">Consulte os itens disponiveis antes do intervalo.</p>
+    </section>
+
+    <section class="menu-grid" aria-label="Itens disponiveis do cardapio">
+        <article class="menu-item" th:each="item : ${itens}">
+            <div>
+                <h2 th:text="${item.nome}">Nome do item</h2>
+                <p th:text="${item.descricao}">Descricao do item</p>
+            </div>
+            <strong th:text="${#numbers.formatCurrency(item.preco)}">R$ 0,00</strong>
+        </article>
+    </section>
+
+    <p class="empty-state" th:if="${#lists.isEmpty(itens)}">
+        Nenhum item disponivel no momento.
+    </p>
+</main>
+</body>
+</html>

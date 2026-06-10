@@ -57,4 +57,16 @@ O projeto usa H2 persistido em arquivo local:
 
 ## Status
 
-Esta etapa contem apenas a estrutura base do projeto. As funcionalidades de cardapio, pedidos e gestao da cantina ainda nao foram implementadas.
+Funcionalidades implementadas:
+
+- RF01: visualizar cardapio disponivel.
+
+Ainda nao implementado:
+
+- selecao de itens;
+- identificacao do aluno;
+- escolha de horario de retirada;
+- confirmacao de pedido;
+- lista de pedidos da cantina;
+- validacao completa de pedido;
+- ordenacao de pedidos por horario.
