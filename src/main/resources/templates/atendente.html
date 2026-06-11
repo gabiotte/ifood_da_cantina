@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Atendente</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-pendente  { background: #FAEEDA; color: #633806; }
+        .badge-pronto    { background: #EAF3DE; color: #27500A; }
+        .badge-retirado  { background: #E1F5EE; color: #085041; }
+
+        .painel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .painel-table th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            color: #555;
+        }
+        .painel-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        .painel-table tr:last-child td { border-bottom: none; }
+
+        .itens-ul { margin: 0; padding: 0; list-style: none; }
+        .itens-ul li { color: #555; }
+
+        .total-val { font-weight: 600; }
+
+        .empty-msg {
+            text-align: center;
+            color: #888;
+            padding: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+<main class="page">
+
+    <section class="header">
+        <p class="eyebrow">Visão geral</p>
+        <h1>Painel do atendente</h1>
+        <p class="subtitle">Todos os pedidos registrados para planejamento da produção.</p>
+    </section>
+
+    <div th:if="${#lists.isEmpty(pedidos)}" class="empty-msg">
+        Nenhum pedido registrado ainda.
+    </div>
+
+    <div th:if="${!#lists.isEmpty(pedidos)}">
+
+        <div style="margin-bottom: 1rem;">
+            <label for="ordenar">Ordenar por horário:</label>
+            <select id="ordenar" onchange="ordenarTabela()">
+                <option value="asc">Mais cedo primeiro</option>
+                <option value="desc">Mais tarde primeiro</option>
+            </select>
+        </div>
+
+        <table class="painel-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Aluno</th>
+                    <th>Retirada</th>
+                    <th>Itens</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="resumo : ${pedidos}">
+                    <td th:text="${resumo.pedido().id()}"></td>
+                    <td th:text="${resumo.pedido().nomeAluno()}"></td>
+                    <td th:text="${resumo.pedido().horarioRetirada()}"></td>
+                    <td>
+                        <ul class="itens-ul">
+                            <li th:each="item : ${resumo.itens()}"
+                                th:text="${item.quantidade() + '× ' + item.nomeItem()}">
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="total-val"
+                        th:text="${#numbers.formatCurrency(resumo.pedido().total())}">
+                    </td>
+                    <td>
+                        <span class="badge badge-pendente">Pendente</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<script>
+function ordenarTabela() {
+    const ordem = document.getElementById('ordenar').value;
+    const tbody = document.querySelector('.painel-table tbody');
+    const linhas = Array.from(tbody.querySelectorAll('tr'));
+
+    linhas.sort((a, b) => {
+        const horarioA = a.cells[2].innerText.trim();
+        const horarioB = b.cells[2].innerText.trim();
+        return ordem === 'asc'
+            ? horarioA.localeCompare(horarioB)
+            : horarioB.localeCompare(horarioA);
+    });
+
+    linhas.forEach(linha => tbody.appendChild(linha));
+}
+</script>
+
+</body>
+</html>

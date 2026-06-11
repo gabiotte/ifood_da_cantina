@@ -1,15 +1,18 @@
 package br.com.ifooddacantina.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.ifooddacantina.dto.ItemSelecionado;
+import br.com.ifooddacantina.dto.PedidoResumo;
 import br.com.ifooddacantina.model.Pedido;
 import br.com.ifooddacantina.model.PedidoItem;
 import br.com.ifooddacantina.repository.PedidoItemRepository;
 import br.com.ifooddacantina.repository.PedidoRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 public class PedidoService {
@@ -44,4 +47,13 @@ public class PedidoService {
     public List<PedidoItem> buscarItensDoPedido(Long pedidoId) {
         return pedidoItemRepository.findByPedidoId(pedidoId);
     }
+
+    public List<PedidoResumo> listarTodos() {
+    return pedidoRepository.findAll()
+            .stream()
+            .map(p -> new PedidoResumo(p, pedidoItemRepository.findByPedidoId(p.getId())))
+            .toList();
 }
+}
+
+
