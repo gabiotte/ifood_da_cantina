@@ -225,3 +225,62 @@ h1 {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+
+/* ── RF05: Confirmar pedido ─────────────────────────────────────────────── */
+
+.confirm-form {
+    margin-top: 24px;
+}
+
+.confirm-button {
+    background: #0b6b3a;
+    font-size: 1rem;
+    padding: 14px 24px;
+}
+
+.confirm-button:hover {
+    background: #085530;
+}
+
+/* ── Tela de confirmação ────────────────────────────────────────────────── */
+
+.confirmation-hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.confirmation-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #0b6b3a;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.order-id {
+    color: #5f6368;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.back-link-container {
+    margin-top: 32px;
+    text-align: center;
+}
+
+.back-link {
+    color: #b53624;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
