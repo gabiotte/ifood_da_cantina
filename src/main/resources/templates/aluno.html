@@ -15,6 +15,16 @@
     </section>
 
     <form class="order-form" method="post" th:action="@{/selecionar-itens}">
+        <section class="student-section" aria-label="Identificacao do aluno">
+            <label for="nomeAluno">Nome do aluno</label>
+            <input id="nomeAluno"
+                   type="text"
+                   name="nomeAluno"
+                   maxlength="80"
+                   placeholder="Digite seu nome"
+                   th:value="${nomeAluno}">
+        </section>
+
         <section class="menu-grid" aria-label="Itens disponiveis do cardapio">
             <article class="menu-item" th:each="item : ${itens}">
                 <div>
@@ -50,6 +60,10 @@
         </p>
 
         <div th:if="${!#lists.isEmpty(selecionados)}">
+            <p class="student-summary" th:if="${nomeAluno != null && !#strings.isEmpty(nomeAluno)}">
+                Pedido em montagem para <strong th:text="${nomeAluno}">Aluno</strong>
+            </p>
+
             <ul class="selected-list">
                 <li th:each="selecionado : ${selecionados}">
                     <span>
