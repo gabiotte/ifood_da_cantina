@@ -60,11 +60,11 @@ O projeto usa H2 persistido em arquivo local:
 Funcionalidades implementadas:
 
 - RF01: visualizar cardapio disponivel.
+- RF02: selecionar itens para montar o pedido.
+- RF03: informar nome do aluno.
 
 Ainda nao implementado:
 
-- selecao de itens;
-- identificacao do aluno;
 - escolha de horario de retirada;
 - confirmacao de pedido;
 - lista de pedidos da cantina;
