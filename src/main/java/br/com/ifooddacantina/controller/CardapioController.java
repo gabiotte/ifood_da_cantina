@@ -27,6 +27,7 @@ public class CardapioController {
 
     @PostMapping("/selecionar-itens")
     public String selecionarItens(
+            @RequestParam(name = "nomeAluno", required = false) String nomeAluno,
             @RequestParam(name = "itemId", required = false) List<Long> itemIds,
             @RequestParam(name = "quantidade", required = false) List<Integer> quantidades,
             Model model
@@ -34,6 +35,7 @@ public class CardapioController {
         List<ItemSelecionado> selecionados = cardapioService.montarSelecao(itemIds, quantidades);
 
         model.addAttribute("itens", cardapioService.listarItensDisponiveis());
+        model.addAttribute("nomeAluno", nomeAluno);
         model.addAttribute("selecionados", selecionados);
         model.addAttribute("totalSelecionado", cardapioService.calcularTotalSelecionado(selecionados));
 
