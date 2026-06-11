@@ -26,21 +26,20 @@
 
             <label for="horaRetirada">Horário de retirada</label>
             <div class="horario-container">
-            <select id="horaRetirada" name="horaRetirada" required>
+                <select id="horaRetirada" name="horaRetirada" required>
                     <option value="">Hora</option>
                     <option th:each="hora : ${#numbers.sequence(7,21)}"
-                    th:value="${hora}"
-                    th:text="${hora}">
+                            th:value="${hora}"
+                            th:text="${hora}">
                     </option>
-            </select>
-
-            <select id="minutoRetirada" name="minutoRetirada" required>
+                </select>
+                <select id="minutoRetirada" name="minutoRetirada" required>
                     <option value="">Minuto</option>
                     <option th:each="minuto : ${#numbers.sequence(0,59)}"
-                    th:value="${#numbers.formatInteger(minuto,2)}"
-                    th:text="${#numbers.formatInteger(minuto,2)}">
+                            th:value="${#numbers.formatInteger(minuto,2)}"
+                            th:text="${#numbers.formatInteger(minuto,2)}">
                     </option>
-            </select>
+                </select>
             </div>
         </section>
 
@@ -50,7 +49,6 @@
                     <h2 th:text="${item.nome}">Nome do item</h2>
                     <p th:text="${item.descricao}">Descricao do item</p>
                 </div>
-
                 <div class="menu-item-footer">
                     <strong th:text="${#numbers.formatCurrency(item.preco)}">R$ 0,00</strong>
                     <label>
@@ -71,9 +69,11 @@
         Nenhum item disponivel no momento.
     </p>
 
+    <!-- Resumo da seleção -->
     <section class="selection-summary" th:if="${selecionados != null}">
         <h2>Itens selecionados</h2>
 
+        <!-- Mensagem de erro/aviso -->
         <p class="empty-state" th:if="${#lists.isEmpty(selecionados)}" th:text="${mensagemSelecao}">
             Selecione ao menos um item para montar seu pedido.
         </p>
@@ -100,6 +100,19 @@
                 <span>Total selecionado</span>
                 <strong th:text="${#numbers.formatCurrency(totalSelecionado)}">R$ 0,00</strong>
             </div>
+
+            <!-- RF05: Botão confirmar + form oculto com todos os dados -->
+            <form method="post" th:action="@{/confirmar-pedido}" class="confirm-form">
+                <input type="hidden" name="nomeAluno"       th:value="${nomeAluno}">
+                <input type="hidden" name="horarioRetirada" th:value="${horarioRetirada}">
+                <th:block th:each="selecionado : ${selecionados}">
+                    <input type="hidden" name="itemId"    th:value="${selecionado.itemId()}">
+                    <input type="hidden" name="quantidade" th:value="${selecionado.quantidade()}">
+                </th:block>
+                <button class="primary-button confirm-button" type="submit">
+                    ✓ Confirmar pedido
+                </button>
+            </form>
         </div>
     </section>
 </main>
