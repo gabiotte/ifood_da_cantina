@@ -14,19 +14,58 @@
         <p class="subtitle">Consulte os itens disponiveis antes do intervalo.</p>
     </section>
 
-    <section class="menu-grid" aria-label="Itens disponiveis do cardapio">
-        <article class="menu-item" th:each="item : ${itens}">
-            <div>
-                <h2 th:text="${item.nome}">Nome do item</h2>
-                <p th:text="${item.descricao}">Descricao do item</p>
-            </div>
-            <strong th:text="${#numbers.formatCurrency(item.preco)}">R$ 0,00</strong>
-        </article>
-    </section>
+    <form class="order-form" method="post" th:action="@{/selecionar-itens}">
+        <section class="menu-grid" aria-label="Itens disponiveis do cardapio">
+            <article class="menu-item" th:each="item : ${itens}">
+                <div>
+                    <h2 th:text="${item.nome}">Nome do item</h2>
+                    <p th:text="${item.descricao}">Descricao do item</p>
+                </div>
+
+                <div class="menu-item-footer">
+                    <strong th:text="${#numbers.formatCurrency(item.preco)}">R$ 0,00</strong>
+                    <label>
+                        <span>Quantidade</span>
+                        <input type="hidden" name="itemId" th:value="${item.id}">
+                        <input type="number" name="quantidade" min="0" max="20" value="0">
+                    </label>
+                </div>
+            </article>
+        </section>
+
+        <button class="primary-button" type="submit" th:if="${!#lists.isEmpty(itens)}">
+            Atualizar selecao
+        </button>
+    </form>
 
     <p class="empty-state" th:if="${#lists.isEmpty(itens)}">
         Nenhum item disponivel no momento.
     </p>
+
+    <section class="selection-summary" th:if="${selecionados != null}">
+        <h2>Itens selecionados</h2>
+
+        <p class="empty-state" th:if="${#lists.isEmpty(selecionados)}" th:text="${mensagemSelecao}">
+            Selecione ao menos um item para montar seu pedido.
+        </p>
+
+        <div th:if="${!#lists.isEmpty(selecionados)}">
+            <ul class="selected-list">
+                <li th:each="selecionado : ${selecionados}">
+                    <span>
+                        <strong th:text="${selecionado.nome()}">Item</strong>
+                        <small th:text="|${selecionado.quantidade()} unidade(s)|">1 unidade</small>
+                    </span>
+                    <strong th:text="${#numbers.formatCurrency(selecionado.subtotal())}">R$ 0,00</strong>
+                </li>
+            </ul>
+
+            <div class="selection-total">
+                <span>Total selecionado</span>
+                <strong th:text="${#numbers.formatCurrency(totalSelecionado)}">R$ 0,00</strong>
+            </div>
+        </div>
+    </section>
 </main>
 </body>
 </html>

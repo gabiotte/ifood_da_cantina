@@ -45,6 +45,11 @@ h1 {
     gap: 16px;
 }
 
+.order-form {
+    display: grid;
+    gap: 24px;
+}
+
 .menu-item {
     display: flex;
     min-height: 160px;
@@ -71,6 +76,89 @@ h1 {
 .menu-item strong {
     color: #0b6b3a;
     font-size: 1.15rem;
+}
+
+.menu-item-footer {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.menu-item-footer label {
+    display: grid;
+    gap: 6px;
+    color: #5f6368;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.menu-item-footer input[type="number"] {
+    width: 88px;
+    border: 1px solid #c9c9c2;
+    border-radius: 6px;
+    padding: 10px;
+    color: #202124;
+    font: inherit;
+}
+
+.primary-button {
+    width: fit-content;
+    border: 0;
+    border-radius: 8px;
+    background: #b53624;
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    padding: 12px 18px;
+}
+
+.primary-button:hover {
+    background: #982c1e;
+}
+
+.selection-summary {
+    margin-top: 32px;
+}
+
+.selection-summary h2 {
+    margin: 0 0 16px;
+    font-size: 1.5rem;
+}
+
+.selected-list {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.selected-list li,
+.selection-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border: 1px solid #deded8;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 16px;
+}
+
+.selected-list span {
+    display: grid;
+    gap: 4px;
+}
+
+.selected-list small,
+.selection-total span {
+    color: #5f6368;
+}
+
+.selection-total {
+    margin-top: 16px;
 }
 
 .empty-state {
