@@ -23,6 +23,25 @@
                    maxlength="80"
                    placeholder="Digite seu nome"
                    th:value="${nomeAluno}">
+
+            <label for="horaRetirada">Horário de retirada</label>
+            <div class="horario-container">
+            <select id="horaRetirada" name="horaRetirada" required>
+                    <option value="">Hora</option>
+                    <option th:each="hora : ${#numbers.sequence(7,21)}"
+                    th:value="${hora}"
+                    th:text="${hora}">
+                    </option>
+            </select>
+
+            <select id="minutoRetirada" name="minutoRetirada" required>
+                    <option value="">Minuto</option>
+                    <option th:each="minuto : ${#numbers.sequence(0,59)}"
+                    th:value="${#numbers.formatInteger(minuto,2)}"
+                    th:text="${#numbers.formatInteger(minuto,2)}">
+                    </option>
+            </select>
+            </div>
         </section>
 
         <section class="menu-grid" aria-label="Itens disponiveis do cardapio">
@@ -63,6 +82,9 @@
             <p class="student-summary" th:if="${nomeAluno != null && !#strings.isEmpty(nomeAluno)}">
                 Pedido em montagem para <strong th:text="${nomeAluno}">Aluno</strong>
             </p>
+            <p th:if="${horarioRetirada != null && !#strings.isEmpty(horarioRetirada)}">
+                Horário de retirada: <strong th:text="${horarioRetirada}"></strong>
+            </p>
 
             <ul class="selected-list">
                 <li th:each="selecionado : ${selecionados}">
@@ -81,5 +103,6 @@
         </div>
     </section>
 </main>
+<script th:src="@{/js/horario.js}"></script>
 </body>
 </html>

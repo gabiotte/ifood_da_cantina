@@ -199,3 +199,29 @@ h1 {
     background: #ffffff;
     color: #5f6368;
 }
+
+.horario-container {
+    display: flex;
+    gap: 12px;
+    width: 420px;
+}
+
+.horario-container select {
+    flex: 1;
+    height: 44px;
+
+    border: 1px solid #c9c9c2;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #202124;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+
+    padding: 0 14px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalTime;
 
 @Service
 public class CardapioService {
@@ -60,4 +61,15 @@ public class CardapioService {
 
         return quantidadePorItemId;
     }
+    
+    public boolean horarioValido(String horarioRetirada) {
+    if (horarioRetirada == null || horarioRetirada.isBlank()) {
+        return false;
+    }
+
+    LocalTime horario = LocalTime.parse(horarioRetirada);
+
+    return !horario.isBefore(LocalTime.of(7, 0))
+            && !horario.isAfter(LocalTime.of(21, 30));
+}
 }
