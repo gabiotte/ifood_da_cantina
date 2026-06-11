@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido confirmado — iFood da Cantina</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<main class="page">
+
+    <section class="confirmation-hero" aria-label="Pedido confirmado com sucesso">
+        <div class="confirmation-icon" aria-hidden="true">✓</div>
+        <p class="eyebrow">Pedido confirmado</p>
+        <h1>Tudo certo, <span th:text="${pedido.nomeAluno}">Aluno</span>!</h1>
+        <p class="subtitle">
+            Seu pedido foi registrado. Retire seu lanche às
+            <strong th:text="${pedido.horarioRetirada}">00:00</strong>.
+        </p>
+    </section>
+
+    <section class="selection-summary" aria-label="Resumo do pedido confirmado">
+        <h2>Resumo do pedido <span class="order-id" th:text="|#${pedido.id}|">#0</span></h2>
+
+        <ul class="selected-list">
+            <li th:each="item : ${itensDoPedido}">
+                <span>
+                    <strong th:text="${item.nomeItem}">Item</strong>
+                    <small th:text="|${item.quantidade} unidade(s)|">1 unidade</small>
+                </span>
+                <strong th:text="${#numbers.formatCurrency(item.subtotal)}">R$ 0,00</strong>
+            </li>
+        </ul>
+
+        <div class="selection-total">
+            <span>Total</span>
+            <strong th:text="${#numbers.formatCurrency(pedido.total)}">R$ 0,00</strong>
+        </div>
+    </section>
+
+    <div class="back-link-container">
+        <a th:href="@{/}" class="back-link">← Fazer novo pedido</a>
+    </div>
+
+</main>
+</body>
+</html>
