@@ -48,7 +48,13 @@ class CardapioControllerIntegrationTest {
         );
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).contains("Painel do atendente", "Teste", "Pendente");
+        assertThat(response.getBody()).contains(
+                "Painel do atendente",
+                "Teste",
+                "Pendente",
+                "data-horario-retirada=\"10:30\"",
+                "atualizarPedidosPrioritarios"
+        );
     }
 
     private ResponseEntity<String> criarPedido() {

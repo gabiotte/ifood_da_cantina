@@ -14,6 +14,7 @@
             font-weight: 600;
         }
         .badge-pendente  { background: #FAEEDA; color: #633806; }
+        .badge-prioritario { background: #FCE1DF; color: #8B1E15; }
         .badge-pronto    { background: #EAF3DE; color: #27500A; }
         .badge-retirado  { background: #E1F5EE; color: #085041; }
 
@@ -35,6 +36,13 @@
             vertical-align: top;
         }
         .painel-table tr:last-child td { border-bottom: none; }
+        .painel-table tr.pedido-prioritario {
+            background: #FFF5E6;
+            box-shadow: inset 4px 0 0 #E74C3C;
+        }
+        .painel-table tr.pedido-prioritario td {
+            border-bottom-color: #F4C7BD;
+        }
 
         .itens-ul { margin: 0; padding: 0; list-style: none; }
         .itens-ul li { color: #555; }
@@ -83,7 +91,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="resumo : ${pedidos}">
+                <tr th:each="resumo : ${pedidos}"
+                    th:data-horario-retirada="${resumo.pedido.horarioRetirada}">
                     <td th:text="${resumo.pedido.id}"></td>
                     <td th:text="${resumo.pedido.nomeAluno}"></td>
                     <td th:text="${resumo.pedido.horarioRetirada}"></td>
@@ -98,7 +107,7 @@
                         th:text="${#numbers.formatCurrency(resumo.pedido.total)}">
                     </td>
                     <td>
-                        <span class="badge badge-pendente">Pendente</span>
+                        <span class="badge badge-pendente" data-status-pedido>Pendente</span>
                     </td>
                 </tr>
             </tbody>
@@ -123,6 +132,34 @@ function ordenarTabela() {
 
     linhas.forEach(linha => tbody.appendChild(linha));
 }
+
+function atualizarPedidosPrioritarios() {
+    const agora = new Date();
+    const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+
+    document.querySelectorAll('[data-horario-retirada]').forEach((linha) => {
+        const horario = linha.dataset.horarioRetirada;
+        const status = linha.querySelector('[data-status-pedido]');
+        const partes = horario ? horario.split(':').map(Number) : [];
+        const horarioValido = partes.length === 2 && partes.every(Number.isInteger);
+
+        if (!horarioValido || !status) {
+            return;
+        }
+
+        const minutosRetirada = partes[0] * 60 + partes[1];
+        const diferenca = minutosRetirada - minutosAgora;
+        const prioritario = diferenca >= 0 && diferenca <= 5;
+
+        linha.classList.toggle('pedido-prioritario', prioritario);
+        status.classList.toggle('badge-pendente', !prioritario);
+        status.classList.toggle('badge-prioritario', prioritario);
+        status.textContent = prioritario ? 'Prioritario' : 'Pendente';
+    });
+}
+
+atualizarPedidosPrioritarios();
+setInterval(atualizarPedidosPrioritarios, 60000);
 </script>
 
 </body>
