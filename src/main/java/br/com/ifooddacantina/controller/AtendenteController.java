@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import br.com.ifooddacantina.service.PedidoService;
 
 @Controller
-public class AtendanteController {
+public class AtendenteController {
 
     private final PedidoService pedidoService;
 
-    public AtendanteController(PedidoService pedidoService) {
+    public AtendenteController(PedidoService pedidoService) {
         this.pedidoService = pedidoService;
     }
 

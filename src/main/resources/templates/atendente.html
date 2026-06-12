@@ -84,18 +84,18 @@
             </thead>
             <tbody>
                 <tr th:each="resumo : ${pedidos}">
-                    <td th:text="${resumo.pedido().id()}"></td>
-                    <td th:text="${resumo.pedido().nomeAluno()}"></td>
-                    <td th:text="${resumo.pedido().horarioRetirada()}"></td>
+                    <td th:text="${resumo.pedido.id}"></td>
+                    <td th:text="${resumo.pedido.nomeAluno}"></td>
+                    <td th:text="${resumo.pedido.horarioRetirada}"></td>
                     <td>
                         <ul class="itens-ul">
                             <li th:each="item : ${resumo.itens()}"
-                                th:text="${item.quantidade() + '× ' + item.nomeItem()}">
+                                th:text="${item.quantidade + '× ' + item.nomeItem}">
                             </li>
                         </ul>
                     </td>
                     <td class="total-val"
-                        th:text="${#numbers.formatCurrency(resumo.pedido().total())}">
+                        th:text="${#numbers.formatCurrency(resumo.pedido.total)}">
                     </td>
                     <td>
                         <span class="badge badge-pendente">Pendente</span>
