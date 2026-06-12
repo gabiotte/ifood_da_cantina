@@ -55,10 +55,12 @@ public class CardapioController {
         model.addAttribute("horarioRetirada", horarioRetirada);
         model.addAttribute("totalSelecionado", cardapioService.calcularTotalSelecionado(selecionados));
 
-        if (selecionados.isEmpty()) {
-            model.addAttribute("mensagemSelecao", "Selecione ao menos um item para montar seu pedido.");
-            return "aluno";
-        }
+        boolean nomeInvalido = nomeAluno == null || nomeAluno.isBlank();
+        boolean semItens = selecionados.isEmpty();
+
+        if (nomeInvalido) model.addAttribute("mensagemNome", "Informe seu nome para continuar.");
+        if (semItens) model.addAttribute("mensagemItens", "Selecione ao menos um item para montar seu pedido.");
+        if (nomeInvalido || semItens) return "aluno";
 
         if (horarioRetirada == null || horarioRetirada.isBlank()) {
             model.addAttribute("mensagemSelecao", "Selecione um horário de retirada.");
@@ -80,7 +82,7 @@ public class CardapioController {
      */
     @PostMapping("/confirmar-pedido")
     public String confirmarPedido(
-            @RequestParam(name = "nomeAluno") String nomeAluno,
+            @RequestParam(name = "nomeAluno", required = false) String nomeAluno,
             @RequestParam(name = "horarioRetirada") String horarioRetirada,
             @RequestParam(name = "itemId", required = false) List<Long> itemIds,
             @RequestParam(name = "quantidade", required = false) List<Integer> quantidades,

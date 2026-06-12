@@ -55,7 +55,8 @@ public class CardapioService {
 
         for (int i = 0; i < quantidadeDePares; i++) {
             Long itemId = itemIds.get(i);
-            int quantidade = Math.max(0, quantidades.get(i));
+            Integer raw = quantidades.get(i);
+            int quantidade = Math.max(0, raw != null ? raw : 0);
             quantidadePorItemId.merge(itemId, quantidade, Integer::sum);
         }
 

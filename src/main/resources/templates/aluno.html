@@ -6,6 +6,27 @@
     <title>iFood da Cantina</title>
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
+
+<script>
+document.querySelector('.confirm-form').addEventListener('submit', function(e) {
+    const nome = document.getElementById('nomeAluno').value.trim();
+    const hora = document.getElementById('horaRetirada').value;
+    const minuto = document.getElementById('minutoRetirada').value;
+    const itens = document.querySelectorAll('input[name="quantidade"]');
+    const temItem = Array.from(itens).some(i => parseInt(i.value) > 0);
+
+    const faltando = [];
+    if (!nome) faltando.push('nome');
+    if (!hora || !minuto) faltando.push('horário');
+    if (!temItem) faltando.push('item');
+
+    if (faltando.length > 0) {
+        e.preventDefault();
+        alert('Faltou: ' + faltando.join(', '));
+    }
+});
+</script>
+
 <body>
 <main class="page">
     <section class="header">
@@ -23,7 +44,7 @@
                    maxlength="80"
                    placeholder="Digite seu nome"
                    th:value="${nomeAluno}">
-
+            <p class="empty-state" th:if="${mensagemNome != null}" th:text="${mensagemNome}"></p>
             <label for="horaRetirada">Horário de retirada</label>
             <div class="horario-container">
                 <select id="horaRetirada" name="horaRetirada" required>
@@ -60,14 +81,14 @@
             </article>
         </section>
 
+        <p class="empty-state" th:if="${#lists.isEmpty(selecionados)}" th:text="${mensagemItens != null ? mensagemItens : 'Selecione ao menos um item para montar seu pedido.'}">
+            Nenhum item disponivel no momento.
+        </p>
+
         <button class="primary-button" type="submit" th:if="${!#lists.isEmpty(itens)}">
             Atualizar selecao
         </button>
     </form>
-
-    <p class="empty-state" th:if="${#lists.isEmpty(itens)}">
-        Nenhum item disponivel no momento.
-    </p>
 
     <!-- Resumo da seleção -->
     <section class="selection-summary" th:if="${selecionados != null}">
@@ -78,7 +99,7 @@
             Selecione ao menos um item para montar seu pedido.
         </p>
 
-        <div th:if="${!#lists.isEmpty(selecionados)}">
+        <div th:if="${!#lists.isEmpty(selecionados) and (nomeAluno != null and !#strings.isEmpty(nomeAluno))}">
             <p class="student-summary" th:if="${nomeAluno != null && !#strings.isEmpty(nomeAluno)}">
                 Pedido em montagem para <strong th:text="${nomeAluno}">Aluno</strong>
             </p>
